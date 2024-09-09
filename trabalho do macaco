@@ -1,0 +1,53 @@
+#trabalho mestrado sagui apertando botão
+#só posso usar os comandos que estão nos slides da aula 3
+#sem ajuda de IA
+#i. Se o animal está habituado, registrar em uma variável
+#b. Requisito 2: Regime de aproximações sucessivas
+#i. Iniciar a variável com 30cm
+#ii. Se a variável de aproximação diminuiu (animal aproximou), liberar 0,5ml de
+# rec
+# iii. Se animal tocou na barra 20x, retornar que o experimento passou para
+# a próxima etapa
+# iv. Se o som1 foi emitido e o animal tocou na barra esquerda, liberar
+# 0,5ml de rec
+# v. Caso contrário não liberar nada
+# vi. Se o som2 foi emitido e o animal tocou na barra direita, liberar 0,5ml
+# de rec
+# vii. Caso contrário não liberar nada
+# # viii. Se o experimento foi realizado 50x em 30min, apresentar que o
+# experimento seguirá para a próxima fase.
+print("Esse programa tem como objetivo receber dados para atrair o sagui para as barras")
+import math
+#animal_habituado 
+local_inicial = 30
+deslocamento = float(input("o quanto o animal se aproximou em cm?\n"))
+aproximação  = local_inicial - deslocamento
+if (aproximação  - local_inicial and deslocamento > 0):
+    print ("Liberar 0,5ml de comida como recompensa")
+elif (deslocamento < 0):
+    print("O animal esta se afastando")
+else:
+    print ("O animal esta parado")      
+tocar_barra = int(input("o animal tocou na barra quantas vezes?\n"))
+if tocar_barra >= 20:
+    print ("passou para a segunda fase!")  
+else:
+    print("repita o processo até o animal tocar 20 vezes na barra!")
+
+som1 = (input("tocar o som1? responda com sim ou não\n"))
+som2 = (input("tocar o som2? responda com sim ou não\n"))
+barra_esquerda_apertada = (input("o animal apertou a barra esquerda?\n"))
+barra_direita_apertada = (input("o animal apertou a barra direita?\n"))
+                          
+if   (som1 == "sim"  and barra_esquerda_apertada == "sim"):
+    print("recompensa de 0,5ml de comida")
+elif (som2 == "sim" and barra_direita_apertada == "sim"):
+    print("recompensa de 0,5ml de comida")     
+else:
+    print("repita até o animal apertar o botão na hora certa") 
+       
+processo_barra = int(input("ele tocou a barra quantas vezes em 30 minutos?\n"))
+if processo_barra >= 50:
+    print ("finalizou o processo! animal Adestrado")  
+else:
+    print("repita o processo até o animal tocar 50 vezes na barra em 30 minutos!\n")
