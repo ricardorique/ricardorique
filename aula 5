@@ -1,0 +1,82 @@
+#aula
+#listas caracteres
+TIPOS_DE_ANALISE_DO_CEREBRO = ['EEG','EMG','IMU']
+POKEMON = ['BULBASAUR','CHARMANDER','SQUIRTLE',TIPOS_DE_ANALISE_DO_CEREBRO]
+#ler lista normalmente
+print(TIPOS_DE_ANALISE_DO_CEREBRO[0])
+print(TIPOS_DE_ANALISE_DO_CEREBRO[1])
+print(TIPOS_DE_ANALISE_DO_CEREBRO[2])
+#ler lista de trás pra frente
+print(TIPOS_DE_ANALISE_DO_CEREBRO[-1])
+print(TIPOS_DE_ANALISE_DO_CEREBRO[-2])
+print(TIPOS_DE_ANALISE_DO_CEREBRO[-3])
+#colocar uma lista dentro da outra
+print(POKEMON[3])
+#colocar duas listas
+print(TIPOS_DE_ANALISE_DO_CEREBRO+POKEMON)
+#concatenar
+print(POKEMON*5)
+lista_de_numeros = ['1','2','3','2000','5','2.5','3.7',"2"]
+print(lista_de_numeros)
+#append, insert,pop
+#pop tirar um elemento da lista
+#append coloar o elemento no final de ma lista
+#insert inserir um elemento em outra lista
+lista_de_numeros.insert(0,'0')
+print(lista_de_numeros)
+#sort,reverse e count
+lista_de_numeros.sort()
+print(lista_de_numeros)
+#sort organização  em ordem
+#reverse organização em ordem decrescente
+#count contar quantas vezes tal coisa é contada na lista
+lista_de_numeros.count(2)
+#Aliasing and Cloning
+# os dois são iguais mas são salas diferentes
+a = [10,20,85,30]
+b = [10,20,85,30]
+print (a == b)
+print (a is b)
+# os dois acessando o mesmo diretório
+b = a
+print (a == b)
+print (a is b)
+b[0] = 5
+print(a)
+#tuplas - listas mas é mais simples, usa () e é imutável que restringe a adição e alteração e elementos, e a tupla é mais rapida.
+tupla = (1,2,3,4)
+print (tupla[0])
+#não a pra alterar os valores da tupla.
+#Fatiamento
+p = "python"
+print(p[0:0])
+print(p[0:1])
+print(p[0:2])
+print(p[0:3])
+print(p[0:4])
+print(p[0:5])
+print(p[0:6])
+p = "python"
+print(p[:])
+print(p[1:])
+print(p[2:])
+print(p[3:])
+print(p[4:])
+print(p[5:])
+print(p[6:])
+p = "python"
+print(p[:1])
+print(p[:2])
+print(p[:3])
+print(p[:4])
+print(p[:5])
+print(p[:6])
+p = "python"
+print(p[0:0])
+print(p[0:1])
+print(p[1:2])
+print(p[2:3])
+print(p[3:4])
+print(p[4:5])
+print(p[5:6])
+print(p[6:6])
