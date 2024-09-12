@@ -1,0 +1,26 @@
+#DicionáriosPython
+#feito para guardar informações
+#arquivo json, um texto
+#dicionario é como se fosse uma lista com strings
+# exp["paciente"] = 'ricardo'
+# exp["trial"] = 1
+# exp["grupo"] = "controle"
+# exp["Dados"] = ['1','2','3','4','5']
+# exp['paciente']['nome']
+# exp ['paciente']['grupo']
+#mais exemplos
+experimento = {}
+experimento['andre'] = {}
+#expeirmento é a variavel, andre é a o primeiro dicionario dentro dele tem a
+#chave 'grupo' e dentro da chave grupo tem a string "controle" 
+experimento['andre']['grupo'] = 'controle'
+#experimento é a variavel, andré é o primeiro diciconario dentro dele tem a 
+#chave "dados" e na chave dados tem  a lista eeg emg ecg
+experimento['andre']['dados'] = ['eeg','emg','ecg']
+#escrever o que tem em todos os dicionarios
+print(experimento)
+#peguei dados de uma chave especifica de dentro do dicionario andre
+print(experimento['andre']['grupo'])
+
+#Dicionarios não sao armazenados em ordens especificas, só armazenar coisas. 
+#dicionarios são implementados por tabelas hashtables propositalmente.
