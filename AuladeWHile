@@ -1,0 +1,52 @@
+# #AuladeWHile
+#UTILIZAÇÃO DO FOR
+# for paciente in range(10):
+#     print("paciente",paciente+1,'pode entrar')
+#     if paciente != 9:
+#         input("Atendente, verifique se a consulta terminou")
+
+#TENTATIVA DE CRIAR UMA LISTA QUE DEU ERRADO
+# listaPacientes = ['André','Felipe','Oliveira','Azevedo']
+# len(listaPacientes)
+# for paciente in listaPacientes:   
+# if len(listaPacientes) < 3:
+#     print ("pode entrar, os ultimos serão os primeiros") 
+# else:
+#     input('Atendente, verifique se a consulta terminou')
+#     print('Paciente',paciente,'pode entrar')
+#UTILIZAÇÃO WHILE SIMPLES
+contador = 0
+while contador < 5:
+    print(contador)
+    contador = contador + 1
+    #PROTOCOLO
+    #5 MIN COLETA BASELINE
+    tempostart = time()
+    while time() -tempostart < 5*60:
+        EEG[0.append(input())]
+        EEG[1.append(input())]
+        EEG[2.append(input())]
+        EEG[3.append(input())]
+#5min coletar com Fes
+    FES[2] = "Ligado"
+    print (fes[0])
+    FES[2] = "Ligado"
+    print (fes[1])
+    FES[2] = "Ligado"
+    print (fes[2])
+    FES[2] = "Ligado"
+    print (fes[3])
+#Enquanto pensar IM braço direito
+#estimulo BD
+Pensar = processar(input())
+while 'IM' in Pensar:
+    if 'Braço Direito' in Pensar:
+        Fes[0] = 'ligado', print(fes[0])
+        Fes[1] = 'ligado', print (Fes[1])
+
+
+
+# EEG = {[],[],[],[]}
+# eeg  512, 5.60, 512
+# for i in range (5.60.512):
+# EEG.append(input)
