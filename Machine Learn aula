@@ -1,0 +1,49 @@
+#MACHINE_LEARN
+# COLOCAR OS CODIGOS NO CHATGPT PARA EXPLICAR CADA LINHA COMO FUNCIONA E ANOTAR NO CADERNO.
+#PARTE 1
+
+from sklearn.svm import SVC
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.preprocessing import LabelBinarizer
+
+x = [(1,2),(2,4),(4,5),(3,2),(3,1)]
+y = [0,0,1,1,2]
+
+classif = OneVsRestClassifier(estimator=SVC(gamma='scale', random_state=0))
+print (x,classif.fit(x,y).predict(x))
+
+#PARTE 2
+
+from sklearn import svm 
+from sklearn.datasets import load_digits
+
+digits = load_digits ()
+
+clf = svm.SVC(gamma=0.001, C=100.)
+clf.fit(digits.data[:-1], digits.target[:-1])
+predicted = clf.predict(digits.data[-1:])
+print(predicted)
+
+#PARTE 3
+
+aprendendo e prevendo
+#PARTE DE IA
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.decomposition import PCA, incrementaIPCA
+
+iris = load_iris()
+x = iris.data
+y = iris.target
+
+n_components = 2
+ipca = IncrementaIPCA(n_components=n_components, batch_size=10)
+X_ipca = ipca.fit_transform(x)
+print(X_ipca)
+
+pca = PCA(n_components=n_components)
+X_pca = pca.fit_transform(x)
+print(X_pca)
+#PARTE DE PLOT COnstrução de gráfico
+#MANDA O CHATGPT FAZER O GRÁFICO COLOCANDO OS DADOS
