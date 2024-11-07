@@ -47,3 +47,15 @@ X_pca = pca.fit_transform(x)
 print(X_pca)
 #PARTE DE PLOT COnstrução de gráfico
 #MANDA O CHATGPT FAZER O GRÁFICO COLOCANDO OS DADOS
+
+#IA PARA VERIFICAR IMAGEM
+#IMAGEM MOEDINHA
+rom skimage import data, io, filters
+
+image = data.coins()
+io.inshow(image)
+io.show()
+#... or any other NumPy array!
+edges = filters.sobel(image)
+io.inshow(edges)
+io.show()
