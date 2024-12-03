@@ -1,0 +1,50 @@
+PUBLISHER
+
+import pandas as pd
+import paho.mqtt.client as mqtt
+import time
+
+# Configuração do broker
+broker = "test.mosquitto.org"
+port = 1883
+topic = "Dados de pacientes com esquizofrenia"
+
+# Função que é chamada quando a conexão ao broker é estabelecida
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Conectado ao broker MQTT com sucesso!")
+    else:
+        print(f"Falha na conexão. Código de erro: {rc}")
+
+# Função que é chamada quando uma mensagem é publicada
+def on_publish(client, userdata, mid):
+    print("Dado publicado com sucesso!")
+
+# Configuração do client MQTT
+client = mqtt.Client()
+client.on_connect = on_connect  # Atribuindo a função de conexão
+client.on_publish = on_publish  # Atribuindo a função de publicação
+
+# Conectar ao broker
+client.connect(broker, port, 60)
+
+# Iniciar o loop do cliente MQTT para manter a conexão
+client.loop_start()
+
+# Carregar os dados do arquivo CSV
+dados = pd.read_csv('/home/ricardo.rique/Downloads/1.csv')
+
+# Função para enviar dados, linha por linha
+def enviar_dados_csv(client):
+    # Itera sobre todas as linhas do CSV
+    for index, linha in dados.iterrows():
+        # Para cada linha, envia os dados das colunas 1 a 4 (colunas 0 a 3 no índice Python)
+        for i in range(4, 7):  # Colunas 1 a 4 (índices 1 a 4)
+            valor = linha.iloc[i]  # Obtém o valor da célula
+            print(f"Enviando valor {valor} para o tópico {topic}")
+            client.publish(topic, str(valor))  # Publica o valor
+            time.sleep(1)  # Aguarda 1 segundo antes de enviar o próximo dado
+        print(f"Linha {index+1} processada.")
+
+# Chama a função para enviar os dados
+enviar_dados_csv(client)
