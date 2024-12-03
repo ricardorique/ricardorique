@@ -1,0 +1,95 @@
+#PUBLISHER
+
+import pandas as pd
+import paho.mqtt.client as mqtt
+import time
+
+# Configuração do broker
+broker = "test.mosquitto.org"
+port = 1883
+topic = "Dados de pacientes com esquizofrenia"
+
+# Função que é chamada quando a conexão ao broker é estabelecida
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Conectado ao broker MQTT com sucesso!")
+    else:
+        print(f"Falha na conexão. Código de erro: {rc}")
+
+# Função que é chamada quando uma mensagem é publicada
+def on_publish(client, userdata, mid):
+    print("Dado publicado com sucesso!")
+
+# Configuração do client MQTT
+client = mqtt.Client()
+client.on_connect = on_connect  # Atribuindo a função de conexão
+client.on_publish = on_publish  # Atribuindo a função de publicação
+
+# Conectar ao broker
+client.connect(broker, port, 60)
+
+# Iniciar o loop do cliente MQTT para manter a conexão
+client.loop_start()
+
+# Carregar os dados do arquivo CSV
+dados = pd.read_csv('C:\\Users\\USER\\Desktop\\1.csv')
+def enviar_dados_csv(client):
+    # Lê o arquivo CSV
+    try:
+        dados = pd.read_csv('C:\\Users\\USER\\Desktop\\1.csv') 
+        print("Dados do CSV carregados com sucesso!")
+        
+        # Publica os dados no tópico
+        client.publish(topic)
+    except Exception as e:
+        print(f"Erro ao ler o CSV ou enviar dados: {e}")
+
+print(dados)  # Mostrar os dados para garantir que foram lidos corretamente
+time.sleep(1)
+client.publish(topic)
+client.loop_stop()
+
+SUBSCRIBER
+
+import paho.mqtt.client as mqtt
+import pandas as pd
+
+# Endereço do broker
+broker = "test.mosquitto.org"
+port = 1883
+topic = "Dados de pacientes com esquizofrenia"
+
+# Função chamada quando a conexão ao broker é estabelecida
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Conectado ao broker MQTT com sucesso!")
+        # Inscreve-se no tópico para receber mensagens
+        client.subscribe(topic)
+    else:
+        print(f"Falha na conexão. Código: {rc}")
+
+# Função de callback para quando uma mensagem for recebida
+def on_message(client, userdata, msg):
+    print(f"Mensagem recebida no tópico {msg.topic}: {msg.payload.decode()}")
+
+# Função de callback para quando uma mensagem for publicada
+def on_publish(client, userdata, mid):
+    print("Dado publicado com sucesso!")
+
+# Criação do cliente MQTT
+client = mqtt.Client()
+
+# Configura os callbacks
+client.on_connect = on_connect
+client.on_message = on_message
+client.on_publish = on_publish
+
+# Conectar ao broker
+client.connect(broker, port, 60)
+
+# Inicia o loop para processar as mensagens
+client.loop_start()
+
+# Publicando dados de exemplo no tópico
+client.publish(topic, "Mensagem de teste: Dados de pacientes com esquizofrenia")
+client.
