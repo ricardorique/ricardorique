@@ -48,3 +48,102 @@ def enviar_dados_csv(client):
 
 # Chama a função para enviar os dados
 enviar_dados_csv(client)
+
+SUBSCRIBE
+
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import paho.mqtt.client as mqtt
+import numpy as np
+import time
+
+# Variáveis globais para armazenar os dados recebidos
+x_data = []  # Eixo X (tempo ou índices)
+y_data = []  # Eixo Y (valores dos dados)
+
+# Função que é chamada quando a conexão ao broker é estabelecida
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Conectado ao broker MQTT com sucesso!")
+    else:
+        print(f"Falha na conexão. Código de erro: {rc}")
+    # Subscribing ao tópico
+    client.subscribe("Dados de pacientes com esquizofrenia")
+
+# Função que é chamada quando uma mensagem é recebida
+def on_message(client, userdata, msg):
+    try:
+        # Dados recebidos no formato de string
+        received_data = msg.payload.decode("utf-8")
+        print(f"Mensagem recebida: {received_data}")
+        
+        # Tenta converter os dados para float
+        try:
+            value = float(received_data)
+            x_data.append(len(x_data))  # Adiciona o índice como eixo X (tempo)
+            y_data.append(value)  # Adiciona o valor ao eixo Y
+        except ValueError:
+            print(f"Erro ao tentar converter '{received_data}' para número. Ignorando.")
+    except Exception as e:
+        print(f"Erro ao processar a mensagem: {e}")
+
+# Configuração do client MQTT
+client = mqtt.Client()
+client.on_connect = on_connect  # Atribuindo a função de conexão
+client.on_message = on_message  # Atribuindo a função de processamento da mensagem
+
+# Conectar ao broker
+broker = "test.mosquitto.org"
+port = 1883
+client.connect(broker, port, 60)
+
+# Iniciar o loop do cliente MQTT para manter a conexão
+client.loop_start()
+
+# Criando o gráfico dinâmico
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 6))
+
+# Gráfico de dados
+line1, = ax1.plot([], [], lw=2)
+ax1.set_ylim(-50, 50)  # Ajuste o limite do gráfico conforme necessário
+ax1.set_xlim(0, 50)  # Ajuste o limite do gráfico conforme necessário
+ax1.set_xlabel('Tempo')
+ax1.set_ylabel('Valor')
+
+# Gráfico da FFT
+line2, = ax2.plot([], [], lw=2)
+ax2.set_ylim(0, 50)  # Ajuste o limite do gráfico de FFT conforme necessário
+ax2.set_xlim(0, 2)  # Limite de frequência
+ax2.set_xlabel('Frequência [Hz]')
+ax2.set_ylabel('Amplitude')
+
+# Função para atualizar os gráficos
+def update_graph(frame):
+    # Atualiza o gráfico de dados
+    line1.set_data(x_data, y_data)
+
+    # Calcula a FFT dos dados
+    if len(y_data) > 1:  # Verifica se há dados suficientes para calcular a FFT
+        # Calculando a FFT
+        fft_data = np.fft.fft(y_data)
+        fft_freqs = np.fft.fftfreq(len(fft_data))
+        fft_magnitude = np.abs(fft_data)
+
+        # Atualiza o gráfico da FFT
+        line2.set_data(fft_freqs[:len(fft_freqs)//2], fft_magnitude[:len(fft_magnitude)//2])  # Exibindo só a parte positiva da FFT
+
+    return line1, line2
+
+# Animação do gráfico
+ani = animation.FuncAnimation(fig, update_graph, blit=True)
+
+plt.tight_layout()
+plt.show()
+
+# Manter o loop MQTT ativo enquanto o gráfico é exibido
+try:
+    while True:
+        time.sleep(1)
+except KeyboardInterrupt:
+    print("Programa finalizado.")
+    client.loop_stop()
